@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 FT.replace(R.id.FragmentModel, new Fragment_Search());
                 break;
-            case 4:
-                FT.replace(R.id.FragmentModel, new Fragment_FilmDetails());
-                break;
 
         }
         FT.commit();

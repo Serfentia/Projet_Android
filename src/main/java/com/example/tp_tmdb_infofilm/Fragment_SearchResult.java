@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -27,130 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Fragment_SearchResult extends Fragment implements ListItemClickListener {
     private static final String key = "55542293051c3724af4d8f8259c17ad4";
-    static List<Film> filmList = new List<Film>() {
-        //region Interface List Declaration
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean contains(@Nullable Object o) {
-            return false;
-        }
-
-        @NonNull
-        @Override
-        public Iterator<Film> iterator() {
-            return null;
-        }
-
-        @NonNull
-        @Override
-        public Object[] toArray() {
-            return new Object[0];
-        }
-
-        @NonNull
-        @Override
-        public <T> T[] toArray(@NonNull T[] a) {
-            return null;
-        }
-
-        @Override
-        public boolean add(Film film) {
-            return false;
-        }
-
-        @Override
-        public boolean remove(@Nullable Object o) {
-            return false;
-        }
-
-        @Override
-        public boolean containsAll(@NonNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(@NonNull Collection<? extends Film> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(int index, @NonNull Collection<? extends Film> c) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(@NonNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(@NonNull Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public Film get(int index) {
-            return null;
-        }
-
-        @Override
-        public Film set(int index, Film element) {
-            return null;
-        }
-
-        @Override
-        public void add(int index, Film element) {
-
-        }
-
-        @Override
-        public Film remove(int index) {
-            return null;
-        }
-
-        @Override
-        public int indexOf(@Nullable Object o) {
-            return 0;
-        }
-
-        @Override
-        public int lastIndexOf(@Nullable Object o) {
-            return 0;
-        }
-
-        @NonNull
-        @Override
-        public ListIterator<Film> listIterator() {
-            return null;
-        }
-
-        @NonNull
-        @Override
-        public ListIterator<Film> listIterator(int index) {
-            return null;
-        }
-
-        @NonNull
-        @Override
-        public List<Film> subList(int fromIndex, int toIndex) {
-            return null;
-        }
-        //endregion
-    };
+    static List<Film> filmList = new ArrayList<>();
 
     View view;
     public String nom;
@@ -177,11 +55,11 @@ public class Fragment_SearchResult extends Fragment implements ListItemClickList
 
         TMDB_Services TMDBServ = new Retrofit.Builder().baseUrl(TMDB_Services.ENDPOINT).addConverterFactory(GsonConverterFactory.create()).build().create(TMDB_Services.class);
 
-        TMDBServ.searchRequest(key, nom).enqueue(new Callback<List<Film>>() {
-            @Override
-            public void onResponse(Call<List<Film>> call, Response<List<Film>> response) {
+        TMDBServ.searchRequest(key, nom).enqueue(new Callback<JsonCompatibleFilmList>() {
 
-                for(Film film : response.body())
+            @Override
+            public void onResponse(Call<JsonCompatibleFilmList> call, Response<JsonCompatibleFilmList> response) {
+                for(Film film : response.body().getJsonCompatibleList())
                 {
                     filmList.add(new Film(film.getImage_path(), film.getTitle(), film.getId()));
                 }
@@ -189,11 +67,10 @@ public class Fragment_SearchResult extends Fragment implements ListItemClickList
                 FilmsAdapter adapter = new FilmsAdapter(filmList, Fragment_SearchResult.this);
                 RVSRes.setAdapter(adapter);
                 RVSRes.setLayoutManager(gridLayoutManager);
-
             }
 
             @Override
-            public void onFailure(Call<List<Film>> call, Throwable t) {
+            public void onFailure(Call<JsonCompatibleFilmList> call, Throwable t) {
 
             }
         });
