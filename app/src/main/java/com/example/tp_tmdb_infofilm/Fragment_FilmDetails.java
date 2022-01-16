@@ -30,7 +30,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Fragment_FilmDetails extends Fragment {
-    private static final String key = "55542293051c3724af4d8f8259c17ad4";
+    private String key = "55542293051c3724af4d8f8259c17ad4";
+    private String language = "en-US";
     static List<Film> filmList = new List<Film>() {
         //region Interface List Declaration
         @Override
@@ -164,8 +165,9 @@ public class Fragment_FilmDetails extends Fragment {
 
     }
 
-    public Fragment_FilmDetails(String p_id){
+    public Fragment_FilmDetails(String p_id, String lang){
         this.id = p_id;
+        this.language = lang;
     }
 
     @Override
@@ -181,7 +183,7 @@ public class Fragment_FilmDetails extends Fragment {
 
         TMDB_Services TMDBserv = new Retrofit.Builder().baseUrl(TMDB_Services.ENDPOINT).addConverterFactory(GsonConverterFactory.create()).build().create(TMDB_Services.class);
 
-        TMDBserv.getDetails(id, key).enqueue(new Callback<Film>() {
+        TMDBserv.getDetails(id, key, language).enqueue(new Callback<Film>() {
             @Override
             public void onResponse(Call<Film> call, Response<Film> response) {
                 Film mFilm = response.body();

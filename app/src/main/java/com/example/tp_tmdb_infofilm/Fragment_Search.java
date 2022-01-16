@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,8 +14,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class Fragment_Search extends Fragment {
-
-    public Fragment_Search(){}
+    private String language;
+    public Fragment_Search(String lang){
+        this.language = lang;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -29,7 +30,7 @@ public class Fragment_Search extends Fragment {
     {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         EditText edtName = (EditText) view.findViewById(R.id.edtSearch);
-        ImageButton mButton = (ImageButton) view.findViewById(R.id.btnSearch);
+        Button mButton = (Button) view.findViewById(R.id.btnSearch);
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +41,7 @@ public class Fragment_Search extends Fragment {
                 {
                     FragmentManager FMS = getParentFragmentManager();
                     FragmentTransaction FTS = FMS.beginTransaction();
-                    FTS.replace(R.id.FragmentModel, new Fragment_SearchResult(v));
+                    FTS.replace(R.id.FragmentModel, new Fragment_SearchResult(v,language));
                     FTS.commit();
                 }
             }

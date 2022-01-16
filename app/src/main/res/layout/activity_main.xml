@@ -25,17 +25,35 @@
             android:textSize="35dp"
             android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/btnLang"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
-            android:layout_toStartOf="@+id/btnFav"
-            android:background="@android:color/transparent"
-            android:onClick="onSearchClick"
-            android:src="@drawable/ic_baseline_language_24"
-            android:text="FR" />
+            android:layout_alignBottom="@+id/btnFav"
+            android:layout_toStartOf="@+id/btnFav">
+
+            <Button
+                android:id="@+id/btnFR"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:onClick="onFRClick"
+                android:text="FR"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btnEN"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:onClick="onENClick"
+                android:text="EN"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/btnSearch"
@@ -67,9 +85,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center_horizontal"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        tools:ignore="MissingConstraints"
+        android:orientation="horizontal" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/green_logo"
@@ -81,13 +105,13 @@
             android:id="@+id/btnPopular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onPopClick"
-            android:text="Popular"
-            android:src="@drawable/ic_baseline_local_fire_department_24"
-            android:background="@android:color/transparent"
             android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="50dp"
-            android:layout_marginVertical="10dp"/>
+            android:layout_marginVertical="10dp"
+            android:background="@android:color/transparent"
+            android:onClick="onPopClick"
+            android:src="@drawable/ic_baseline_local_fire_department_24"
+            android:text="Popular" />
 
 
         <ImageButton
@@ -97,8 +121,10 @@
             android:layout_marginHorizontal="50dp"
             android:layout_marginVertical="10dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_fiber_new_24"
-            android:onClick="onUpClick" />
+            android:onClick="onUpClick"
+            android:src="@drawable/ic_baseline_fiber_new_24" />
+
+
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
