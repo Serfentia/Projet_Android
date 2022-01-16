@@ -27,9 +27,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Fragment_SearchResult extends Fragment implements ListItemClickListener {
-    private static final String key = "55542293051c3724af4d8f8259c17ad4";
+    private String key = "55542293051c3724af4d8f8259c17ad4";
     static List<Film> filmList = new ArrayList<>();
-
+    private String language = "en-US";
     View view;
     public String nom;
 
@@ -37,8 +37,9 @@ public class Fragment_SearchResult extends Fragment implements ListItemClickList
     private String id_film;
     static int index;
 
-    public Fragment_SearchResult(View v){
+    public Fragment_SearchResult(View v, String lang){
         view = v;
+        language = lang;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class Fragment_SearchResult extends Fragment implements ListItemClickList
 
         TMDB_Services TMDBServ = new Retrofit.Builder().baseUrl(TMDB_Services.ENDPOINT).addConverterFactory(GsonConverterFactory.create()).build().create(TMDB_Services.class);
 
-        TMDBServ.searchRequest(key, nom).enqueue(new Callback<JsonCompatibleFilmList>() {
+        TMDBServ.searchRequest(key, language, nom).enqueue(new Callback<JsonCompatibleFilmList>() {
 
             @Override
             public void onResponse(Call<JsonCompatibleFilmList> call, Response<JsonCompatibleFilmList> response) {
@@ -84,7 +85,8 @@ public class Fragment_SearchResult extends Fragment implements ListItemClickList
 
         FragmentManager SearchFM = Fragment_SearchResult.this.getParentFragmentManager();
         FragmentTransaction SearchFT = SearchFM.beginTransaction();
-        SearchFT.replace(R.id.FragmentModel, new Fragment_FilmDetails(film.getId()));
+        SearchFT.replace(R.id.FragmentModel, new Fragment_FilmDetails(film.getId(), language));
         SearchFT.commit();
+        MainActivity.setTabIndex(4);
     }
 }

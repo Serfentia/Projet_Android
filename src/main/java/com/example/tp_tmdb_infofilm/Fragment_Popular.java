@@ -27,15 +27,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Fragment_Popular extends Fragment implements ListItemClickListener {
-    private static final String key = "55542293051c3724af4d8f8259c17ad4";
+    private String key = "45bf6592c14a965b33549f4cc7e6c664";
     static List<Film> filmList = new ArrayList<>();
-
+    private String language = "en-US";
 
     private String id_film;
     static int index;
 
-    public Fragment_Popular(){
-
+    public Fragment_Popular(String lang){
+        this.language = lang;
     }
 
     @Override
@@ -53,15 +53,11 @@ public class Fragment_Popular extends Fragment implements ListItemClickListener 
 
         TMDB_Services TMDBserv = new Retrofit.Builder().baseUrl(TMDB_Services.ENDPOINT).addConverterFactory(GsonConverterFactory.create()).build().create(TMDB_Services.class);
 
-        TMDBserv.popularRequest(key).enqueue(new Callback<JsonCompatibleFilmList>() {
+        TMDBserv.popularRequest(key, language).enqueue(new Callback<JsonCompatibleFilmList>() {
 
             @Override
             public void onResponse(@NonNull Call<JsonCompatibleFilmList> call, @NonNull Response<JsonCompatibleFilmList> response) {
-                assert response.body() != null;
-                for(Film film : response.body().getJsonCompatibleList())
-                {
-                    filmList.add(new Film(film.getImage_path(), film.getTitle(), film.getId()));
-                }
+                filmList = response.body().getJsonCompatibleList();
 
                 FilmsAdapter adapter = new FilmsAdapter(filmList, Fragment_Popular.this);
                 RVPop.setAdapter(adapter);
@@ -83,7 +79,8 @@ public class Fragment_Popular extends Fragment implements ListItemClickListener 
 
         FragmentManager PopularFM = Fragment_Popular.this.getParentFragmentManager();
         FragmentTransaction PopularFT = PopularFM.beginTransaction();
-        PopularFT.replace(R.id.FragmentModel, new Fragment_FilmDetails(film.getId()));
+        PopularFT.replace(R.id.FragmentModel, new Fragment_FilmDetails(film.getId(), language));
         PopularFT.commit();
+        MainActivity.setTabIndex(4);
     }
 }
