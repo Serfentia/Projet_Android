@@ -7,8 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
     }
 
@@ -44,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
         }
         FT.commit();
 
-        Button btnP = (Button) findViewById(R.id.btnPopular);
-        Button btnU = (Button) findViewById(R.id.btnUpcoming);
-        Button btnS = (Button) findViewById(R.id.btnSearch);
+        ImageButton btnP = (ImageButton) findViewById(R.id.btnPopular);
+        ImageButton btnU = (ImageButton) findViewById(R.id.btnUpcoming);
+        ImageButton btnS = (ImageButton) findViewById(R.id.btnSearch);
 
 
     }
