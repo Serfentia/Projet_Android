@@ -31,8 +31,6 @@ public class Fragment_Upcoming extends Fragment implements ListItemClickListener
     static List<Film> filmList = new ArrayList<>();
 
 
-    private String id_film;
-    static int index;
 
     public Fragment_Upcoming(){
 

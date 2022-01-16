@@ -14,9 +14,7 @@ public class LaunchScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
-
         Button kontinuh = findViewById(R.id.btnLaunch);
-
         kontinuh.setOnClickListener(v -> onLauncher(v));
 
     }

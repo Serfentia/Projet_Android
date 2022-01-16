@@ -30,7 +30,6 @@ public class Fragment_Popular extends Fragment implements ListItemClickListener 
     private static final String key = "55542293051c3724af4d8f8259c17ad4";
     static List<Film> filmList = new ArrayList<>();
 
-
     private String id_film;
     static int index;
 
